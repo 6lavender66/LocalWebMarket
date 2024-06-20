@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rynek Akcji</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+{% extends "base.html" %}
+
+{% block title %}Rynek Akcji{% endblock %}
+
+{% block content %}
+    <h1>Rynek Akcji</h1>
+    <h2>Akcje dostępne do kupienia</h2>
+    <div class="tile-container">
+        {% for stock in stocks %}
+            <div class="tile">
+                <h3>{{ stock.name }} ({{ stock.id }})</h3>
+                <p>Cena: {{ stock.price }}$</p>
+                <form method="POST" action="{{ url_for('buy_stock') }}">
+                    <input type="hidden" name="stock_id" value="{{ stock.id }}">
+                    <label for="quantity">Ilość:</label>
+                    <input type="number" id="quantity" name="quantity" required>
+                    <button type="submit">Kup</button>
+                </form>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}
+
+
+</body>
+</html>

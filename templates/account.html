@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Konto użytkownika</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+{% extends "base.html" %}
+
+{% block title %}Konto użytkownika{% endblock %}
+
+{% block content %}
+    <h1>Witaj, {{ user.first_name }} {{ user.last_name }}!</h1>
+    <p>Dostępne środki: {{ user.funds }}$</p>
+    
+    <h2>Wystaw akcje na sprzedaż</h2>
+    <form method="POST" action="{{ url_for('sell_stock') }}">
+        <label for="stock_id">Ticker akcji:</label>
+        <select id="stock_id" name="stock_id" required>
+            {% for item in user.portfolio %}
+                <option value="{{ item.stock_id }}">{{ item.stock_id }}</option>
+            {% endfor %}
+        </select>
+        <br>
+        <label for="quantity">Ilość:</label>
+        <input type="number" id="quantity" name="quantity" required>
+        <br>
+        <button type="submit">Wystaw na sprzedaż</button>
+    </form>
+    
+    <h2>Twoje Akcje</h2>
+    <div class="tile-container">
+        {% for item in user.portfolio %}
+            <div class="tile">
+                <h3>{{ item.stock_id }}</h3>
+                <p>Ilość: {{ item.quantity }} akcji</p>
+            </div>
+        {% endfor %}
+    </div>
+    
+    <h2>Informacje o Akcjach</h2>
+    <form method="GET" action="{{ url_for('stock_info') }}">
+        <label for="stock_info_id">Ticker akcji:</label>
+        <select id="stock_info_id" name="stock_id" required>
+            {% for stock in stocks %}
+                <option value="{{ stock.id }}">{{ stock.name }} ({{ stock.id }})</option>
+            {% endfor %}
+        </select>
+        <br>
+        <button type="submit">Sprawdź informacje</button>
+    </form>
+{% endblock %}
+
+
+</body>
+</html>

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Informacje o Akcji</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+{% extends "base.html" %}
+
+{% block title %}Informacje o Akcji{% endblock %}
+
+{% block content %}
+    <h1>Informacje o Akcji</h1>
+    <p>Nazwa: {{ stock.name }}</p>
+    <p>Wartość: {{ stock.price }}$</p>
+    <p>Dywidenda: {{ stock.dividend_yield }}%</p>
+    <a href="{{ url_for('account') }}">Wróć do konta</a>
+{% endblock %}
+    
+    
+</body>
+</html>

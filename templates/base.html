@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<div id="mySidebar" class="sidebar">
+    <div class="user-info">
+        <p>{{ user.first_name }} {{ user.last_name }}</p>
+        <p>Saldo: {{ user.funds }}$</p>
+    </div>
+    <a href="{{ url_for('market') }}">Rynek</a>
+    <a href="{{ url_for('account') }}">Twoje konto</a>
+    <a href="{{ url_for('logout') }}" style="margin-top:auto;">Wyloguj się</a>
+</div>
+
+<div id="main">
+    <button class="openbtn" onclick="openNav()">&#9776; Menu</button>
+    <div class="container">
+        {% block content %}{% endblock %}
+    </div>
+</div>
+
+<script>
+function openNav() {
+    document.getElementById("mySidebar").style.left = "0";
+}
+
+function closeNav() {
+    document.getElementById("mySidebar").style.left = "-250px";
+}
+
+document.addEventListener('click', function(event) {
+    var isClickInside = document.getElementById("mySidebar").contains(event.target) || 
+                        document.querySelector(".openbtn").contains(event.target);
+
+    if (!isClickInside) {
+        closeNav();
+    }
+});
+</script>
+
+</body>
+</html>
